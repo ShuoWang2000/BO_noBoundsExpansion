@@ -136,6 +136,12 @@ class SequentialDomainReductionTransformer(DomainTransformer):
 
         self._update(target_space)
 
+        # lb = np.zeros_like(self.current_optimal)
+        # ub = np.zeros_like(self.current_optimal)
+        # for i in range(len(lb)):
+        #     lb[i] = max(self.current_optimal[i] - 0.5*self.r[i], self.original_bounds[i])
+        #     ub[i]
+
         new_bounds = np.array(
             [
                 self.current_optimal - 0.5 * self.r,
@@ -143,6 +149,6 @@ class SequentialDomainReductionTransformer(DomainTransformer):
             ]
         ).T
 
-        self._trim(new_bounds, self.original_bounds)
+        new_bounds = self._trim(new_bounds, self.original_bounds)
         self.bounds.append(new_bounds)
         return self._create_bounds(target_space.keys, new_bounds)
